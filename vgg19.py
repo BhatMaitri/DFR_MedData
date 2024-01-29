@@ -13,7 +13,7 @@ class VGG19(torch.nn.Module):
         features = vgg19(pretrained=True).features    # feature layers
         """ vgg.features
         Sequential(
-          (0): Conv2d(3, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+          (0): Conv2d(1, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
           (1): ReLU(inplace)                                                        # self.relu1_1
           (2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
           (3): ReLU(inplace)                                                        # self.relu1_2
