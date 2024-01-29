@@ -1,7 +1,39 @@
-# DFR_MedData
-Anomaly detection using DFR but for medical data
-Anomaly detection paper uses Industrial dataset :https://arxiv.org/abs/2012.07122 
-Trying to run the code with medical datset
-Medical dataset : https://syncandshare.lrz.de/dl/fiH6r4B6WyzAaxZXTEAYCE/data.zip
-Medical Dataset code reference : https://github.com/compai-lab/mad_seminar_ws23/
-DFR code : https://github.com/YoungGod/DFR
+# Master Seminar - Unsupervised Anomaly Segmentation
+
+This repository contains the PyTorch dataloader classes and an evaluation script
+to be used for the implementation of your models.
+It also contains an example model and trainer, a simple Autoencoder that can be
+used as a starting point for your projects.
+
+[![Open Demo In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/compai-lab/mad_seminar_s23/blob/main/main.ipynb)
+
+## Installation
+
+### When on your local machine
+
+Clone this repository
+```shell
+git clone https://github.com/compai-lab/mad_seminar_ws23.git
+```
+
+Create (and activate) a new virtual environment (requires conda)
+```shell
+conda create --name mad python=3.9
+conda activate mad
+```
+
+Install the required packages
+```shell
+cd mad_seminar_ws23
+python -m pip install -r requirements.txt
+```
+
+Download and extract the data
+```shell
+wget <link you got from your supervisor>
+unzip data.zip
+```
+
+### When in Google Colab
+
+Simply follow the instructions in `main.ipynb`
