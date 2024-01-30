@@ -28,7 +28,7 @@ class TrainDataset(Dataset):
 
     def __getitem__(self, idx):
         # Load image
-        img = Image.open(self.data[idx]).convert('L')
+        img = Image.open(self.data[idx]).convert('RGB')
         # Pad to square
         img = transforms.Pad(((img.height - img.width) // 2, 0), fill=0)(img)
         # Resize
@@ -112,7 +112,7 @@ class TestDataset(Dataset):
 
     def __getitem__(self, idx):
         # Load image
-        img = Image.open(self.img_paths[idx]).convert('L')
+        img = Image.open(self.img_paths[idx]).convert('RGB')
         img = img.resize(self.target_size, Image.BICUBIC)
         img = transforms.ToTensor()(img)
 
