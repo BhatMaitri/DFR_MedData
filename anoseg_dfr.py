@@ -76,8 +76,8 @@ class AnoSegDFR():
         #self.train_data_loader = DataLoader(self.train_data, batch_size=cfg.batch_size, shuffle=True, num_workers=4)
         #self.test_data_loader = DataLoader(self.test_data, batch_size=1, shuffle=False, num_workers=1)
         #self.eval_data_loader = DataLoader(self.train_data, batch_size=10, shuffle=False, num_workers=2)
-        self.train_data_loader = DataLoader(train_data_module.train_data, batch_size=cfg.batch_size, shuffle=True, num_workers=4)
-        self.eval_data_loader = DataLoader(TrainDataset(train_data_module.train_data, train_data_module.target_size),batch_size=10, shuffle=False, num_workers=2)
+        self.train_data_loader = DataLoader(TrainDataset(train_data_module.train_data, train_data_module.target_size), batch_size=cfg.batch_size, shuffle=True, num_workers=4)
+        self.eval_data_loader = DataLoader(TrainDataset(train_data_module.val_data, train_data_module.target_size),batch_size=10, shuffle=False, num_workers=2)
 
         # autoencoder classifier
         self.autoencoder, self.model_name = self.build_classifier()
@@ -555,7 +555,7 @@ class AnoSegDFR():
         time_start = time.time()
         masks = []
         scores = []
-        for i, (img, mask, name) in enumerate(self.test_data_loader):  # batch size is 1.
+        for i, (img, mask, name) in enumerate(self.eval_data_loader):  # batch size is 1.
             i += 1
             # data
             img = img.to(self.device)
