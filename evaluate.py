@@ -75,10 +75,11 @@ class Evaluator:
                 results = self.model.detect_anomaly(inputs)
                 reconstructions = results['reconstruction']
                 anomaly_maps = results['anomaly_map']
+                input_feature = results['input_feature']
 
                 for i in range(nr_batches):
                     count = str(idx * nr_batches + i)
-                    x_i = inputs[i][0]
+                    x_i = input_feature[i][0]
                     x_rec_i = reconstructions[i][0] if reconstructions is not None else None
                     ano_map_i = anomaly_maps[i][0].detach().numpy()
                     mask_i = masks[i][0].cpu().detach().numpy()
