@@ -601,7 +601,7 @@ class AnoSegDFR():
         self.extractor.eval()
         self.autoencoder.eval()
         infeat = self.extractor(img)
-        rec = self.autoencoder(input)
+        rec = self.autoencoder(infeat)
         return {
             'reconstruction': rec,
             'input_feature': infeat,
