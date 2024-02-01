@@ -559,7 +559,7 @@ class AnoSegDFR():
             i += 1
             # data
             img = img.to(self.device)
-            mask = mask.squeeze().numpy()
+            #mask = mask.squeeze().numpy()
 
             # score
             score = self.score(img).data.cpu().numpy()
