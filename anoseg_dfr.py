@@ -23,6 +23,7 @@ import pytorch_lightning as pl
 
 from data_loader import TrainDataModule, get_all_test_dataloaders, TrainDataset
 from evaluate import Evaluator 
+from torch import Tensor
 import joblib
 from sklearn.decomposition import PCA
 
@@ -588,15 +589,17 @@ class AnoSegDFR():
 
     # Calling evaluations from given code
     def metrics_evaluation(self,test_dataloaders):
+        with open('./configs/ae_config.yaml', 'r') as f:
+            config = yaml.safe_load(f)
+        test_dataloaders = get_all_test_dataloaders(config['split_dir'], config['target_size'], config['batch_size'])
         evaluator = Evaluator(self, self.device, test_dataloaders)
         return evaluator.evaluate() 
     # Anomaly detection code
     def detect_anomaly(self, img: Tensor):
-        rec = self(img)
+        #rec = self(img)
         anomaly_map = self.score(img).data.cpu().numpy()
         anomaly_score = torch.sum(anomaly_map, dim=(1, 2, 3))
         return {
-            'reconstruction': rec,
             'anomaly_map': anomaly_map,
             'anomaly_score': anomaly_score
         }
