@@ -598,10 +598,16 @@ class AnoSegDFR():
         return evaluator.evaluate() 
     # Anomaly detection code
     def detect_anomaly(self, img: Tensor):
-        #rec = self(img)
-        anomaly_map = self.score(img).data.cpu().numpy()
-        anomaly_score = torch.sum(anomaly_map, dim=(1, 2, 3))
+        self.extractor.eval()
+        self.autoencoder.eval()
+
+        input = self.extractor(img)
+        rec = self.autoencoder(input)
+        #anomaly_map = self.score(img).data.cpu().numpy()
+        #anomaly_score = torch.sum(anomaly_map, dim=(1, 2, 3))
+        anomaly_map,anomaly_score = self.segment(img, threshold=self.threshold)
         return {
+            'reconstruction': rec,
             'anomaly_map': anomaly_map,
             'anomaly_score': anomaly_score
         }
