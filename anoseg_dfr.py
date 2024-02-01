@@ -581,7 +581,7 @@ class AnoSegDFR():
         #auc_score, roc = auc_roc(masks, scores)
         # metrics over all data
         # print("auc:", auc_score)
-        # out_file = os.path.join(self.eval_path, '{}_epoch_auc.csv'.format(self.model_name))
+        out_file = os.path.join(self.eval_path, '{}_epoch_auc.csv'.format(self.model_name))
         if not os.path.exists(out_file):
             with open(out_file, mode='w') as f:
                 f.write("Epoch" + "\n")
