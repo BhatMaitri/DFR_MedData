@@ -42,7 +42,7 @@ class Evaluator:
         logging.info("############### Object Localzation TEST ################")
         lpips_alex = lpips.LPIPS(net='alex')  # best forward scores
         # self.model.load_state_dict(global_model)
-        self.model.eval()
+        #self.model.eval()
         metrics = {
             'L1': [],
             'LPIPS': [],
