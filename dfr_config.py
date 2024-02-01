@@ -3,7 +3,7 @@ from anoseg_dfr import AnoSegDFR
 import os
 
 
-def config():
+def config2():
     parser = argparse.ArgumentParser(description="Settings of DFR")
 
     # positional args
