@@ -5,6 +5,7 @@ import torch.nn.functional as F
 from feature import Extractor
 from torch.utils.data import DataLoader
 import torch.optim as optim
+from torchvision import transforms
 #from data.MVTec import NormalDataset, TrainTestDataset
 
 import time
@@ -559,6 +560,7 @@ class AnoSegDFR():
         for i, (img ) in enumerate(self.eval_data_loader):  # batch size is 1.
             i += 1
             # data
+            img = transforms.ToTensor()(img)
             img = img.to(self.device)
             #mask = mask.squeeze().numpy()
 
