@@ -589,14 +589,14 @@ class AnoSegDFR():
             f.write(str(epoch) + "," + "\n")
 
     # Calling evaluations from given code
-    def metrics_evaluation(self,test_dataloaders):
+    def metrics_evaluation(self):
         with open('./configs/ae_config.yaml', 'r') as f:
             config = yaml.safe_load(f)
         test_dataloaders = get_all_test_dataloaders(config['split_dir'], config['target_size'], config['batch_size'])
         evaluator = Evaluator(self, self.device, test_dataloaders)
         return evaluator.evaluate() 
     # Anomaly detection code
-    def detect_anomaly(self, img: Tensor):
+    def detect_anomaly(self, img):
         anomaly_map,anomaly_score = self.segment(img, threshold=self.threshold)
         self.extractor.eval()
         self.autoencoder.eval()
