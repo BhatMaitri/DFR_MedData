@@ -248,7 +248,7 @@ class AnoSegDFR():
         """
         self.extractor.eval()
         self.autoencoder.eval()
-        input = input[:,1,:,:]
+        input = input[:1,:,:,:]
         input = self.extractor(input)
         dec = self.autoencoder(input)
 
