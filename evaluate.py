@@ -127,6 +127,7 @@ class Evaluator:
                     test_metrics['F1'].append(2 * (precision * tp) / (precision + tp + 1e-8))
 
                     if int(count) == 0:
+                        x_i = inputs[i][0]
                         if x_rec_i is None:
                             x_rec_i = np.zeros(x_i.shape)
                         elements = [x_i, x_rec_i, ano_map_i, bboxes.astype(np.int64), x_pos, x_neg]
