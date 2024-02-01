@@ -560,7 +560,6 @@ class AnoSegDFR():
         for i, (img ) in enumerate(self.eval_data_loader):  # batch size is 1.
             i += 1
             # data
-            img = transforms.ToTensor()(img)
             img = img.to(self.device)
             #mask = mask.squeeze().numpy()
 
