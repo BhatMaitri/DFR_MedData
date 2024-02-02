@@ -597,14 +597,9 @@ class AnoSegDFR():
         return evaluator.evaluate() 
     # Anomaly detection code
     def detect_anomaly(self, img):
-        anomaly_map,anomaly_score = self.segment(img, threshold=self.threshold)
-        self.extractor.eval()
-        self.autoencoder.eval()
-        infeat = self.extractor(img)
-        rec = self.autoencoder(infeat)
+        thresh = self.estimate_thred_with_fpr(expect_fpr=0.005)
+        anomaly_map,anomaly_score = self.segment(img,thresh )
         return {
-            'reconstruction': rec,
-            'input_feature': infeat,
             'anomaly_map': anomaly_map,
             'anomaly_score': anomaly_score
         }
