@@ -14,7 +14,7 @@ def config2():
     parser.add_argument('--model_name', type=str, default="", help="specifed model name")
     parser.add_argument('--save_path', type=str, default=os.getcwd(), help="saving path")
     parser.add_argument('--img_size', type=int, nargs="+", default=(256, 256), help="image size (hxw)")
-    parser.add_argument('--device', type=str, default="cuda:0", help="device for training and testing")
+    parser.add_argument('--device', type=str, default="cpu:0", help="device for training and testing")
 
     # parameters for the regional feature generator
     parser.add_argument('--backbone', type=str, default="vgg19", help="backbone net")
