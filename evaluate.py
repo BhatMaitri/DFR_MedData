@@ -75,7 +75,7 @@ class Evaluator:
                 results = self.model.detect_anomaly(inputs)
                 #reconstructions = results['reconstruction']
                 anomaly_maps = results['anomaly_map']
-                input_feature = results['anomaly_score']
+                #input_feature = results['anomaly_score']
 
                 for i in range(nr_batches):
                     count = str(idx * nr_batches + i)
