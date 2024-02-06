@@ -73,7 +73,7 @@ class Evaluator:
                 neg_masks[neg_masks > 0.5] = 1
                 neg_masks[neg_masks < 1] = 0
                 results = self.model.detect_anomaly(inputs)
-                reconstructions = results['reconstruction']
+                #reconstructions = results['reconstruction']
                 anomaly_maps = results['anomaly_map']
                 input_feature = results['input_feature']
 
@@ -81,7 +81,7 @@ class Evaluator:
                     count = str(idx * nr_batches + i)
                     x_i = input_feature[i][0]
                     #x_rec_i = reconstructions[i][0] if reconstructions is not None else None
-                    ano_map_i = anomaly_maps[i][0].detach().numpy()
+                    ano_map_i = anomaly_maps[i][0]
                     mask_i = masks[i][0].cpu().detach().numpy()
                     neg_mask_i = neg_masks[i][0].cpu().detach().numpy()
                     #bboxes = cv2.cvtColor(neg_mask_i * 255, cv2.COLOR_GRAY2RGB)
