@@ -80,28 +80,28 @@ class Evaluator:
                 for i in range(nr_batches):
                     count = str(idx * nr_batches + i)
                     x_i = input_feature[i][0]
-                    x_rec_i = reconstructions[i][0] if reconstructions is not None else None
+                    #x_rec_i = reconstructions[i][0] if reconstructions is not None else None
                     ano_map_i = anomaly_maps[i][0].detach().numpy()
                     mask_i = masks[i][0].cpu().detach().numpy()
                     neg_mask_i = neg_masks[i][0].cpu().detach().numpy()
-                    bboxes = cv2.cvtColor(neg_mask_i * 255, cv2.COLOR_GRAY2RGB)
-                    cnts_gt = cv2.findContours((mask_i * 255).astype(np.uint8), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-                    cnts_gt = cnts_gt[0] if len(cnts_gt) == 2 else cnts_gt[1]
-                    gt_box = []
+                    #bboxes = cv2.cvtColor(neg_mask_i * 255, cv2.COLOR_GRAY2RGB)
+                    #cnts_gt = cv2.findContours((mask_i * 255).astype(np.uint8), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+                    #cnts_gt = cnts_gt[0] if len(cnts_gt) == 2 else cnts_gt[1]
+                    #gt_box = []
 
-                    for c_gt in cnts_gt:
-                        x, y, w, h = cv2.boundingRect(c_gt)
-                        gt_box.append([x, y, x + w, y + h])
-                        cv2.rectangle(bboxes, (x, y), (x + w, y + h), (0, 255, 0), 1)
+                    #for c_gt in cnts_gt:
+                    #   x, y, w, h = cv2.boundingRect(c_gt)
+                    #    gt_box.append([x, y, x + w, y + h])
+                    #    cv2.rectangle(bboxes, (x, y), (x + w, y + h), (0, 255, 0), 1)
 
-                    if x_rec_i is not None:
-                        loss_l1 = self.criterion_rec(x_rec_i, x_i)
-                        test_metrics['L1'].append(loss_l1.item())
-                        loss_lpips = np.squeeze(lpips_alex(x_i.cpu(), x_rec_i.cpu()).detach().numpy())
-                        test_metrics['LPIPS'].append(loss_lpips)
-                        x_rec_i = x_rec_i.cpu().detach().numpy()
-                        ssim_ = ssim(x_rec_i, x_i.cpu().detach().numpy(), data_range=1.)
-                        test_metrics['SSIM'].append(ssim_)
+                    #if x_rec_i is not None:
+                    #   loss_l1 = self.criterion_rec(x_rec_i, x_i)
+                    #   test_metrics['L1'].append(loss_l1.item())
+                    #   loss_lpips = np.squeeze(lpips_alex(x_i.cpu(), x_rec_i.cpu()).detach().numpy())
+                    #   test_metrics['LPIPS'].append(loss_lpips)
+                    #   x_rec_i = x_rec_i.cpu().detach().numpy()
+                    #   ssim_ = ssim(x_rec_i, x_i.cpu().detach().numpy(), data_range=1.)
+                    #   test_metrics['SSIM'].append(ssim_)
 
                     x_i = x_i.cpu().detach().numpy()
                     x_pos = ano_map_i * mask_i
@@ -126,25 +126,25 @@ class Evaluator:
                     test_metrics['Recall'].append(tp)
                     test_metrics['F1'].append(2 * (precision * tp) / (precision + tp + 1e-8))
 
-                    if int(count) == 0:
-                        x_i = inputs[i][0]
-                        if x_rec_i is None:
-                            x_rec_i = np.zeros(x_i.shape)
-                        elements = [x_i, x_rec_i, ano_map_i, bboxes.astype(np.int64), x_pos, x_neg]
-                        v_maxs = [1, 1, 0.99, 1, np.max(ano_map_i), np.max(ano_map_i)]
+                    # if int(count) == 0:
+                    #     x_i = inputs[i][0]
+                    #     if x_rec_i is None:
+                    #         x_rec_i = np.zeros(x_i.shape)
+                    #     elements = [x_i, x_rec_i, ano_map_i, bboxes.astype(np.int64), x_pos, x_neg]
+                    #     v_maxs = [1, 1, 0.99, 1, np.max(ano_map_i), np.max(ano_map_i)]
 
-                        titles = ['Input', 'Reconstruction', 'Anomaly Map', 'GT',
-                                  str(np.round(res_anomaly, 2)) + ', TP: ' + str(tp),
-                                  str(np.round(res_healthy, 2)) + ', FP: ' + str(fp)]
+                    #     titles = ['Input', 'Reconstruction', 'Anomaly Map', 'GT',
+                    #               str(np.round(res_anomaly, 2)) + ', TP: ' + str(tp),
+                    #               str(np.round(res_healthy, 2)) + ', FP: ' + str(fp)]
 
-                        diffp, axarr = plt.subplots(1, len(elements), gridspec_kw={'wspace': 0, 'hspace': 0})
-                        diffp.set_size_inches(len(elements) * 4, 4)
-                        for idx_arr in range(len(axarr)):
-                            axarr[idx_arr].axis('off')
-                            v_max = v_maxs[idx_arr]
-                            c_map = 'gray' if v_max == 1 else 'plasma'
-                            axarr[idx_arr].imshow(np.squeeze(elements[idx_arr]), vmin=0, vmax=v_max, cmap=c_map)
-                            axarr[idx_arr].set_title(titles[idx_arr])
+                    #     diffp, axarr = plt.subplots(1, len(elements), gridspec_kw={'wspace': 0, 'hspace': 0})
+                    #     diffp.set_size_inches(len(elements) * 4, 4)
+                    #     for idx_arr in range(len(axarr)):
+                    #         axarr[idx_arr].axis('off')
+                    #         v_max = v_maxs[idx_arr]
+                    #         c_map = 'gray' if v_max == 1 else 'plasma'
+                    #         axarr[idx_arr].imshow(np.squeeze(elements[idx_arr]), vmin=0, vmax=v_max, cmap=c_map)
+                    #         axarr[idx_arr].set_title(titles[idx_arr])
 
             for metric in test_metrics:
                 print('{} mean: {} +/- {}'.format(metric, np.nanmean(test_metrics[metric]),
@@ -181,4 +181,4 @@ class Evaluator:
             )
             fig_bp.update_yaxes(range=[0, 1], title_text='score', tick0=0, dtick=0.1, showgrid=False)
             fig_bps[metric] = fig_bp
-        return metrics, fig_bps, diffp
+        return metrics, fig_bps
