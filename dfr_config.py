@@ -14,7 +14,7 @@ def config2():
     parser.add_argument('--model_name', type=str, default="", help="specifed model name")
     parser.add_argument('--save_path', type=str, default=os.getcwd(), help="saving path")
     parser.add_argument('--img_size', type=int, nargs="+", default=(256, 256), help="image size (hxw)")
-    parser.add_argument('--device', type=str, default="cpu:0", help="device for training and testing")
+    parser.add_argument('--device', type=str, default="cuda:0", help="device for training and testing")
 
     # parameters for the regional feature generator
     parser.add_argument('--backbone', type=str, default="vgg19", help="backbone net")
@@ -30,9 +30,9 @@ def config2():
 
     # training and testing
     # default values
-    data_name = "bottle"
-    train_data_path = "/home/jie/Datasets/MVAomaly/" + data_name + "/train/good"
-    test_data_path = "/home/jie/Datasets/dataset/MVAomaly/" + data_name + "/test"
+    data_name = "fMRI"
+    train_data_path = data_name + "/train/good"
+    test_data_path =  data_name + "/test"
 
     parser.add_argument('--data_name', type=str, default=data_name, help="data name")
     parser.add_argument('--train_data_path', type=str, default=train_data_path, help="training data path")
@@ -43,7 +43,7 @@ def config2():
     parser.add_argument('--is_bn', type=bool, default=True, help="if using bn layer in CAE")
     parser.add_argument('--batch_size', type=int, default=4, help="batch size for training")
     parser.add_argument('--lr', type=float, default=1e-4, help="learning rate")
-    parser.add_argument('--epochs', type=int, default=150, help="epochs for training")    # default 700, for wine 150
+    parser.add_argument('--epochs', type=int, default= 450, help="epochs for training")    # default 700, for wine 150
 
     # segmentation evaluation
     parser.add_argument('--thred', type=float, default=0.5, help="threshold for segmentation")
