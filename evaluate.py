@@ -79,7 +79,7 @@ class Evaluator:
 
                 for i in range(nr_batches):
                     count = str(idx * nr_batches + i)
-                    x_i = input_feature[i][0]
+                    x_i = inputs[i][0]
                     #x_rec_i = reconstructions[i][0] if reconstructions is not None else None
                     ano_map_i = anomaly_maps[i][0]
                     mask_i = masks[i][0].cpu().detach().numpy()
